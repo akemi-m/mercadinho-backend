@@ -39,3 +39,23 @@ Para executar um container a partir de uma imagem, utilize o comando:
 ```bash
 docker run espm-ubuntu
 ```
+
+Para trabalhar com cluster de containers, utilize o Docker Compose. Exemplo de arquivo compose.yaml:
+```yaml
+name: espm-store
+
+services:
+
+  db:
+    image: postgres:latest
+```
+
+Para subir o cluster de containers, utilize o comando:
+```bash
+docker compose up -d
+````
+
+Para parar o cluster de containers, utilize o comando:
+```bash
+docker compose down
+```
