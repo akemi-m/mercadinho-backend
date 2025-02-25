@@ -59,3 +59,60 @@ Para parar o cluster de containers, utilize o comando:
 ```bash
 docker compose down
 ```
+
+### Exercício Selmini 1
+
+Identifique os objetos no problema abaixo:
+
+- Um cinema pode ter muitas salas, sendo necessário, portanto, registrar informações a respeito de cada sala, como sua capacidade (número de lugares disponíveis).
+
+- O cinema apresenta vários filmes. Um filme tem informações como título e duração. Sempre que um filme for adquirido deverá ser registrado;
+
+- Um filme pode ter vários atores.
+
+``` mermaid
+classDiagram
+    class Sala {
+        - String nome
+        - int capacidade
+        + abrir()
+        + fechar()
+    }
+    class Filme {
+        - String titulo
+        - int duracao
+        - String classificacao
+        - Genero genero
+        - List< Ator> atores
+        + registrar() Filme
+    }
+    class Genero {
+        - String nome
+        + registrar() Genero
+    }
+    class Ator {
+        - String nome
+        - Date dtNascimento
+    }
+    class Sessao {
+        - Filme Filme
+        - DateTime datetime
+        - Sala sala
+    }
+    Filme <|-- Genero
+    Filme <|-- Ator
+    Sessao <|-- Filme
+    Sessao <|-- Sala
+```
+
+
+### Exercício Selmini 2
+
+Identifique os objetos no problema abaixo:
+
+- Um clube tem muitos sócios e precisa manter informações referente a eles, como o número
+do seu cartão de sócio, endereço, telefone e e-mail.
+
+- Um sócio pode ter nenhum ou vários dependentes.
+
+- Um sócio deve pagar mensalidades para poder frequentar o clube. Serão cobrados juros sobre o valor da mensalidade relativos ao atraso do pagamento. As informações pertinentes a cada mensalidade são a data de pagamento, o valor, a data em que foi efetivamente paga e juros aplicados.
