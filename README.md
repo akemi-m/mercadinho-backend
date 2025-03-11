@@ -116,3 +116,31 @@ do seu cartão de sócio, endereço, telefone e e-mail.
 - Um sócio pode ter nenhum ou vários dependentes.
 
 - Um sócio deve pagar mensalidades para poder frequentar o clube. Serão cobrados juros sobre o valor da mensalidade relativos ao atraso do pagamento. As informações pertinentes a cada mensalidade são a data de pagamento, o valor, a data em que foi efetivamente paga e juros aplicados.
+
+
+### Diagrama de Classes do Banco
+
+``` mermaid
+classDiagram
+    class Conta {
+        - String id
+        - double saldo
+        - Cliente cliente
+        + sacar(double valor)
+        + depositar(double valor)
+    }
+    class Cliente {
+        - String id
+        - String nome
+        - List<Conta> contas
+    }
+    class PessoaFisica {
+        - String cpf
+    }
+    class PessoaJuridica {
+        - String cnpj
+    }
+    Conta *-- Cliente
+    Cliente <|-- PessoaFisica
+    Cliente <|-- PessoaJuridica
+```

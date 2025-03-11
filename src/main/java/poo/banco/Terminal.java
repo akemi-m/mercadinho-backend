@@ -37,9 +37,32 @@ public class Terminal {
     }
 
     private Cliente createCustomer() {
+
+        Cliente cliente;
+
         System.out.print("Nome: ");
         String name = scanner.nextLine().trim();
-        Cliente cliente = new Cliente(name);
+
+        System.out.print("Tipo Fisica|Juridica [f|j]: ");
+        String tipo = scanner.nextLine().trim();
+        if (tipo.trim().toLowerCase().equals("f")) {
+            String cpf = null;
+            while (true) {
+                System.out.print("CPF: ");
+                cpf = scanner.nextLine().trim();
+                if (Util.isCpf(cpf)) break;
+                System.out.println("CPF invalido");
+            }
+            cliente = new PessoaFisica(name, cpf);
+        } else {
+            System.out.print("CNPJ: ");
+            String cnpj = scanner.nextLine().trim();
+            cliente = new PessoaJuridica(name, cnpj);
+        }
+
+        // nao eh possivel, pois a classe cliente
+        // eh abstrata
+        // Cliente cliente = new Cliente(name);
         return cliente;
     }
     
