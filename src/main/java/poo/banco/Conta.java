@@ -5,7 +5,7 @@ import java.util.UUID;
 public class Conta {
 
     private String id = UUID.randomUUID().toString();
-    private double saldo = 0;
+    protected double saldo = 0;
 
     public void depositar(double valor) {
         if (valor > 0) {

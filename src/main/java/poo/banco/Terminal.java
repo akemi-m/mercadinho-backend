@@ -63,6 +63,7 @@ public class Terminal {
         // nao eh possivel, pois a classe cliente
         // eh abstrata
         // Cliente cliente = new Cliente(name);
+
         return cliente;
     }
     

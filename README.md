@@ -124,7 +124,7 @@ do seu cartão de sócio, endereço, telefone e e-mail.
 classDiagram
     class Conta {
         - String id
-        - double saldo
+        # double saldo
         - Cliente cliente
         + sacar(double valor)
         + depositar(double valor)

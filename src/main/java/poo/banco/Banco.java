@@ -3,7 +3,7 @@ package poo.banco;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Banco {
+public final class Banco {
 
     private final String name;
     private final List<Cliente> clientes;
