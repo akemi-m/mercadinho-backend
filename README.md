@@ -140,7 +140,16 @@ classDiagram
     class PessoaJuridica {
         - String cnpj
     }
+    class ContaCorrente {
+        - double limite
+        + sacar(double valor)
+    }
+    class ContaPoupanca {
+        + sacar(double valor)
+    }
     Conta *-- Cliente
+    Conta <|-- ContaCorrente
+    Conta <|-- ContaPoupanca
     Cliente <|-- PessoaFisica
     Cliente <|-- PessoaJuridica
 ```

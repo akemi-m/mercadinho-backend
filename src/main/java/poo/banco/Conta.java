@@ -2,9 +2,11 @@ package poo.banco;
 
 import java.util.UUID;
 
-public class Conta {
+public abstract class Conta {
 
     private String id = UUID.randomUUID().toString();
+    
+    // a classe e os filhos podem enxergar esse atributo.
     protected double saldo = 0;
 
     public void depositar(double valor) {
@@ -13,16 +15,9 @@ public class Conta {
         }
     }
 
-    /* 
-    * realiza um saque da conta do usuario
-     * restrito ao saldo da conta e nao permite
-     * valores negativos
-     */
-    public void sacar(double valor) {
-        if (valor > 0 && saldo >= valor) {
-            this.saldo -= valor;
-        }
-    } 
+    // a classe especialista (filha) eh obrigada
+    // a implementar esse metodo.
+    public abstract void sacar(double valor);
 
     public String getId() {
         return id;
