@@ -9,6 +9,11 @@ public class PessoaFisica extends Cliente {
         this.cpf = cpf;
     }
 
+    public PessoaFisica(String id, String name, String cpf) {
+        super(id, name);
+        this.cpf = cpf;
+    }
+
     public String getCpf() {
         return cpf;
     }

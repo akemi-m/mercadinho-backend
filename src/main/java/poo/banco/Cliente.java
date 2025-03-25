@@ -4,10 +4,16 @@ import java.util.UUID;
 
 public abstract class Cliente {
 
-    private final String id = UUID.randomUUID().toString();
+    private final String id;
     private final String name;
 
     public Cliente(String name) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+    }
+
+    public Cliente(String id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -30,6 +36,11 @@ public abstract class Cliente {
             (obj != null) &&
             (obj instanceof Cliente) &&
             ((Cliente) obj).getId().equals(id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
     
 }
