@@ -4,11 +4,12 @@ public class ContaCorrente extends Conta {
 
     private double limite = 0;
 
-    public ContaCorrente() {
-        this(10);
+    public ContaCorrente(Cliente cliente) {
+        this(cliente, 10);
     }
 
-    public ContaCorrente(double limite) {
+    public ContaCorrente(Cliente cliente, double limite) {
+        super(cliente);
         this.limite = limite;
     }
 

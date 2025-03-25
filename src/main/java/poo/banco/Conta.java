@@ -8,6 +8,11 @@ public abstract class Conta {
     
     // a classe e os filhos podem enxergar esse atributo.
     protected double saldo = 0;
+    protected final Cliente cliente;
+
+    public Conta(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
     public void depositar(double valor) {
         if (valor > 0) {
@@ -25,6 +30,10 @@ public abstract class Conta {
 
     public double getSaldo() {
         return saldo;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
     }
 
     /*

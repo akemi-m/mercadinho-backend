@@ -2,15 +2,18 @@ package poo.aula05;
 
 import java.util.Scanner;
 
+import poo.banco.Cliente;
 import poo.banco.Conta;
 import poo.banco.ContaCorrente;
+import poo.banco.PessoaFisica;
 
 public class Terminal {
     
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        Conta conta = new ContaCorrente(5000);
+        Cliente cliente = new PessoaFisica("teodoro", "123");
+        Conta conta = new ContaCorrente(cliente, 5000);
 
         while (true) {
 
