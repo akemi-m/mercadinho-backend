@@ -9,10 +9,12 @@ public final class Banco {
 
     private final String name;
     private final Map<String, Cliente> clientesById;
+    private final Map<String, Conta> contasById;
 
     public Banco(String name) {
         this.name = name;
         this.clientesById = new HashMap<>();
+        this.contasById = new HashMap<>();
     }
 
     public List<Cliente> getClientes() {
@@ -25,6 +27,14 @@ public final class Banco {
 
     public void addCliente(Cliente cliente) {
         clientesById.put(cliente.getId(), cliente);
+    }
+
+    public void addConta(Conta conta) {
+        contasById.put(conta.getId(), conta);
+    }
+
+    public List<Conta> getContas() {
+        return new ArrayList<>(contasById.values());
     }
 
     public String getName() {
