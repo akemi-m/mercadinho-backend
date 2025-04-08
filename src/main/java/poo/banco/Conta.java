@@ -15,9 +15,10 @@ public abstract class Conta {
     }
 
     public void depositar(double valor) {
-        if (valor > 0) {
-            this.saldo += valor;
+        if (valor <= 0) {
+            throw new BancoException("D10", "apenas depositos positivos");
         }
+        this.saldo += valor;
     }
 
     // a classe especialista (filha) eh obrigada

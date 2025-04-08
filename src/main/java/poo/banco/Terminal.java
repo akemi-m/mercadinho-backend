@@ -15,6 +15,7 @@ public class Terminal {
             System.out.println(banco.getName());
             System.out.println();
             Cliente atualCliente = null;
+            Conta atualConta = null;
             while (true) {
 
                 try {
@@ -24,6 +25,10 @@ public class Terminal {
                         atualCliente == null
                         ? ""
                         : atualCliente.getName();
+                    prompt +=
+                        atualConta == null
+                        ? ""
+                        : String.format("|%s [%s]", atualConta.getId(), atualConta.getSaldo());
 
                     System.out.print(prompt + "> ");
                     String line = scanner.nextLine().trim();
@@ -35,16 +40,52 @@ public class Terminal {
                         // cria cliente
                         atualCliente = createCustomer();
                         banco.addCliente(atualCliente);
+                        atualConta = null;
                     } else if (line.equals("2")) {
                         listCustomers();
                     } else if (line.equals("3")) {
                         System.out.print("codigo do cliente: ");
                         String id = scanner.nextLine();
                         atualCliente = banco.getCliente(id);
+                        atualConta = null;
                     } else if (line.equals("4")) {
+                        if (atualCliente == null) {
+                            throw new BancoException("D05", "cliente não selecionado");
+                        }
                         Conta conta = createAccount(atualCliente);
-                    } else if (line.length() == 0) {
+                        atualCliente.addConta(conta);
+                        atualConta = conta;
+                    } else if (line.equals("5")) {
+                        if (atualCliente == null) {
+                            throw new BancoException("D05", "cliente não selecionado");
+                        }
+                        listAccounts(atualCliente);
+                    } else if (line.equals("6")) {
+                        if (atualCliente == null) {
+                            throw new BancoException("D05", "cliente não selecionado");
+                        }
+                        System.out.print("codigo da conta: ");
+                        String id = scanner.nextLine();
+                        atualConta = atualCliente.getConta(id);
+                    } else if (line.equals("7")) {
 
+                        // depositar
+                        if (atualConta == null) {
+                            throw new BancoException("D06", "conta não selecionada");
+                        }
+                        double valor = inputValue();
+                        atualConta.depositar(valor);
+
+                    } else if (line.equals("8")) {
+
+                        // sacar
+                        if (atualConta == null) {
+                            throw new BancoException("D06", "conta não selecionada");
+                        }
+                        double valor = inputValue();
+                        atualConta.sacar(valor);
+
+                    } else if (line.length() == 0) {
                     } else {
                         throw new UnsupportedOperationException("invalid command");
                     }
@@ -70,6 +111,16 @@ public class Terminal {
         // }
         banco.getClientes().stream().forEach(c -> {
             System.out.println(c);
+        });
+    }
+
+    private void listAccounts(Cliente cliente) {
+        cliente.getContas().stream().forEach(c -> {
+            System.out.println((
+                c instanceof ContaCorrente ? "CC" :
+                c instanceof ContaPoupanca ? "CP" :
+                "") + c
+            );
         });
     }
 
@@ -110,6 +161,10 @@ public class Terminal {
         help += "\n  2. listar clientes";
         help += "\n  3. selectionar cliente";
         help += "\n  4. criar conta";
+        help += "\n  5. listar contas";
+        help += "\n  6. selecionar conta";
+        help += "\n  7. depositar";
+        help += "\n  8. sacar";
         System.out.println(help);
     }
 
@@ -128,6 +183,18 @@ public class Terminal {
         }
 
         return conta;
+    }
+
+    private double inputValue() {
+        while (true) {
+            try {
+                System.out.print("valor: ");
+                String s = scanner.nextLine();
+                return Double.parseDouble(s);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+        }
     }
 
 }
