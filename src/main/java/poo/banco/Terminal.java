@@ -1,5 +1,6 @@
 package poo.banco;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Terminal {
@@ -55,11 +56,15 @@ public class Terminal {
                         Conta conta = createAccount(atualCliente);
                         atualCliente.addConta(conta);
                         atualConta = conta;
+                        // adicionar conta no banco
+                        banco.addConta(atualConta);
+
                     } else if (line.equals("5")) {
                         if (atualCliente == null) {
                             throw new BancoException("D05", "cliente não selecionado");
                         }
-                        listAccounts(atualCliente);
+                        listAccounts(atualCliente.getContas());
+
                     } else if (line.equals("6")) {
                         if (atualCliente == null) {
                             throw new BancoException("D05", "cliente não selecionado");
@@ -67,6 +72,7 @@ public class Terminal {
                         System.out.print("codigo da conta: ");
                         String id = scanner.nextLine();
                         atualConta = atualCliente.getConta(id);
+
                     } else if (line.equals("7")) {
 
                         // depositar
@@ -84,6 +90,18 @@ public class Terminal {
                         }
                         double valor = inputValue();
                         atualConta.sacar(valor);
+
+                    } else if (line.equals("9")) {
+
+                        listAccounts(banco.getContas());
+
+                    } else if (line.equals("r")) {
+
+                        banco.getContas().forEach(c -> {
+                            if (c instanceof Rendimento) {
+                                ((Rendimento) c).render();
+                            }
+                        });
 
                     } else if (line.length() == 0) {
                     } else {
@@ -114,12 +132,12 @@ public class Terminal {
         });
     }
 
-    private void listAccounts(Cliente cliente) {
-        cliente.getContas().stream().forEach(c -> {
+    private void listAccounts(List<Conta> contas) {
+        contas.stream().forEach(c -> {
             System.out.println((
                 c instanceof ContaCorrente ? "CC" :
                 c instanceof ContaPoupanca ? "CP" :
-                "") + c
+                "CI") + " " + c
             );
         });
     }
@@ -165,6 +183,8 @@ public class Terminal {
         help += "\n  6. selecionar conta";
         help += "\n  7. depositar";
         help += "\n  8. sacar";
+        help += "\n  9. lista todas as contas";
+        help += "\n  r. render";
         System.out.println(help);
     }
 
@@ -173,13 +193,15 @@ public class Terminal {
             throw new RuntimeException("Cliente nao definido");
         }
         Conta conta;
-        System.out.print("Tipo [(P)oupanca|(C)orrente]: ");
+        System.out.print("Tipo [(P)oupanca|(C)orrente|(I)nvestimento]: ");
         String tipo = scanner.nextLine().trim().toLowerCase();
 
         if (tipo.equals("p")) {
             conta = new ContaPoupanca(cliente);
-        } else {
+        } else if (tipo.equals("c")) {
             conta = new ContaCorrente(cliente);
+        } else {
+            conta = new ContaInvestimento(cliente);
         }
 
         return conta;
