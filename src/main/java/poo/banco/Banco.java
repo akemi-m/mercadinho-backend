@@ -23,6 +23,10 @@ public final class Banco {
         return clientesById.get(id);
     }
 
+    public void addCliente(Cliente cliente) {
+        clientesById.put(cliente.getId(), cliente);
+    }
+
     public String getName() {
         return name;
     }

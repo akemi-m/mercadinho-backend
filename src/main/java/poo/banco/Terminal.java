@@ -34,7 +34,7 @@ public class Terminal {
                     } else if (line.equals("1")) {
                         // cria cliente
                         atualCliente = createCustomer();
-                        banco.getClientes().add(atualCliente);
+                        banco.addCliente(atualCliente);
                     } else if (line.equals("2")) {
                         listCustomers();
                     } else if (line.equals("3")) {
