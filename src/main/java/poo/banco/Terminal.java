@@ -38,6 +38,10 @@ public class Terminal {
                     } else if (line.equals("2")) {
                         listCustomers();
                     } else if (line.equals("3")) {
+                        System.out.print("codigo do cliente: ");
+                        String id = scanner.nextLine();
+                        atualCliente = banco.getCliente(id);
+                    } else if (line.equals("4")) {
                         Conta conta = createAccount(atualCliente);
                     } else if (line.length() == 0) {
 
@@ -104,7 +108,8 @@ public class Terminal {
         String help = "";
         help += "\n  1. criar cliente";
         help += "\n  2. listar clientes";
-        help += "\n  3. criar conta";
+        help += "\n  3. selectionar cliente";
+        help += "\n  4. criar conta";
         System.out.println(help);
     }
 
