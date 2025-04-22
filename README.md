@@ -153,3 +153,17 @@ classDiagram
     Cliente <|-- PessoaFisica
     Cliente <|-- PessoaJuridica
 ```
+
+
+## Instalação do Java
+
+Verificar a versão do Java instalada:
+```bash
+java -version
+```
+
+Verificar também o path
+```bash
+path
+```
+
