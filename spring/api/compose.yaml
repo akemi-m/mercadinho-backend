@@ -6,11 +6,16 @@ services:
     build:
       context: ./account-service
       dockerfile: Dockerfile
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: store
+      DATABASE_PASSWORD: s3cret0
     ports:
       - 8080:8080
 
   db:
     image: postgres:latest
+    hostname: db
     environment:
       POSTGRES_USER: store
       POSTGRES_PASSWORD: s3cret0

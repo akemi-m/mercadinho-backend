@@ -17,3 +17,13 @@ src
     └── resources
         └── application.yaml
 ```
+
+Compilar, estando no diretório do microsserviço, execute o comando:
+``` bash
+../account-service> mvn clean package
+```
+
+Para rodar o docker compose, execute o comando, no diretório `api`:
+``` bash
+docker compose up -d --build
+```
