@@ -1,6 +1,10 @@
 package espm.account;
 
+import java.text.SimpleDateFormat;
+
 public class AccountParser {
+
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     
     public static Account to(AccountIn in) {
         return in == null ? null :
@@ -16,7 +20,8 @@ public class AccountParser {
             AccountOut.builder()
                 .id(a.id())
                 .name(a.name())
-                .email(a.email())                
+                .email(a.email())
+                .createdAt(sdf.format(a.createdAt()))                
                 .build();
     }
 
