@@ -4,6 +4,10 @@ import java.text.SimpleDateFormat;
 
 public class AccountParser {
 
+    /*
+     * See:
+     * https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html
+     */
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     
     public static Account to(AccountIn in) {
