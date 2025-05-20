@@ -10,5 +10,4 @@ public record AccountOut(
     String email,
     String createdAt
 ) {
-    
 }

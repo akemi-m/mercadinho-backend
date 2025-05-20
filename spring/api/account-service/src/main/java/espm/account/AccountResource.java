@@ -1,6 +1,8 @@
 package espm.account;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,9 @@ public class AccountResource {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private PriceService priceService;
     
     @GetMapping("/account")
     public List<AccountOut> read() {
@@ -55,6 +60,15 @@ public class AccountResource {
         Account a = AccountParser.to(in).id(id);
         Account saved = accountService.update(a);
         return AccountParser.to(saved);
+    }
+
+    @GetMapping("/price/{from}/{to}")
+    public Map<String, String> price(
+        @PathVariable String from,
+        @PathVariable String to
+    ) {
+        Map<String, String> out = priceService.price(from, to);
+        return out;
     }
 
 }
