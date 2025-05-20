@@ -10,6 +10,8 @@ services:
       DATABASE_HOST: db
       DATABASE_USERNAME: store
       DATABASE_PASSWORD: s3cret0
+    deploy:    
+      replicas: 1
     ports:
       - 8080:8080
 
