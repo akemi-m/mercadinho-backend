@@ -1,13 +1,12 @@
 package espm.account;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.experimental.Accessors;
 
-@Builder @Accessors(fluent = true)
-public record AccountIn(
-    String name,
-    String email,
-    String password
-) {
-    
+@Builder @Data @Accessors(fluent = true)
+public class AccountIn {
+    private String name;
+    private String email;
+    private String password;
 }
