@@ -21,6 +21,18 @@ services:
     deploy:    
       replicas: 1
 
+  data:
+    build:
+      context: ./data-service
+      dockerfile: Dockerfile
+    hostname: data
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: store
+      DATABASE_PASSWORD: s3cret0
+    deploy:    
+      replicas: 1
+
   auth:
     build:
       context: ./auth-service
