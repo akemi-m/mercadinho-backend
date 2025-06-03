@@ -19,7 +19,13 @@ services:
       DATABASE_USERNAME: store
       DATABASE_PASSWORD: s3cret0
     deploy:    
-      replicas: 3
+      replicas: 1
+
+  auth:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    hostname: auth
 
   db:
     image: postgres:latest

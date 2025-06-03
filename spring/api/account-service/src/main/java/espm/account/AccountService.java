@@ -68,6 +68,12 @@ public class AccountService {
         return accountRepository.findById(id).orElse(null).to();
     }
 
+    public Account login(String name, String password) {
+        final String hash = hash(password);
+        AccountModel found = accountRepository.findByEmailAndHashPassword(name, hash);
+        return found == null ? null : found.to();
+    }
+
     /*
      * Calcula o hash
      * https://bytebytego.com/guides/how-to-store-passwords-in-the-database/

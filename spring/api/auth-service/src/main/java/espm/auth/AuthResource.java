@@ -26,6 +26,7 @@ public class AuthResource {
 
     }
 
+    @PostMapping("/auth/register")
     public void register(
         @RequestBody RegisterIn register
     ) {

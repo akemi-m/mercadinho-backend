@@ -4,6 +4,10 @@ server:
     include-message: always
 
 spring:
+  application:
+    name: account
+  jackson:
+    default-property-inclusion: non_null
   datasource:
     url: jdbc:postgresql://${DATABASE_HOST}:5432/store
     username: ${DATABASE_USERNAME}
