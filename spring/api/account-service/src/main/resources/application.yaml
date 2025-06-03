@@ -20,3 +20,7 @@ spring:
     properties:
       hibernate:
         default_schema: account
+
+logging:
+  level:
+    espm: ${LOGGING_LEVEL_ESPM:debug}

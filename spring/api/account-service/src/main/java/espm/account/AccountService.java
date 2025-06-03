@@ -7,6 +7,8 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import org.springframework.web.server.ResponseStatusException;
  */
 @Service
 public class AccountService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
     @Autowired
     private AccountRepository accountRepository;
@@ -68,9 +72,12 @@ public class AccountService {
         return accountRepository.findById(id).orElse(null).to();
     }
 
-    public Account login(String name, String password) {
+    public Account login(String email, String password) {
+        logger.debug("email: " + email);
+        logger.debug("password: " + password);
         final String hash = hash(password);
-        AccountModel found = accountRepository.findByEmailAndHashPassword(name, hash);
+        logger.debug("hash: " + hash);
+        AccountModel found = accountRepository.findByEmailAndHashPassword(email, hash);
         return found == null ? null : found.to();
     }
 

@@ -1,5 +1,8 @@
 package espm.auth;
 
+import java.util.Date;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,15 @@ public class AuthService {
     @Autowired
     private AccountController accountController;
 
+    @Autowired
+    private JwtService jwtService;
+
     public String login(String email, String password) {
+
+        logger.debug("login: " +
+            "email: [" + email + "] " +
+            "password: [" + password + "] "
+        );
 
         // verifica se usuario e senha existem
         AccountOut accountOut = accountController.login(
@@ -32,9 +43,9 @@ public class AuthService {
         if (accountOut == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
+        logger.debug("account id: " + accountOut.id());
 
-        // TODO: cria um token.
-        return "ainda tem que criar token";
+        return createToken(accountOut);
 
     }
 
@@ -54,6 +65,26 @@ public class AuthService {
 
         logger.debug("out: " + accountOut);
 
+    }
+
+    public AccountOut whoiam(String idAccount) {
+        return accountController.read(idAccount);
+    }
+
+    private String createToken(AccountOut account) {
+        Date notBefore = new Date();
+        Date expiration = new Date(
+            notBefore.getTime() + 1000l * 60 * 60 * 24 * 30);
+        return jwtService.create(
+            account.id(),
+            notBefore,
+            expiration
+        );  
+    }
+
+    public Map<String, String> solve(String token) {
+        final String id = jwtService.getId(token);
+        return Map.of("idAccount", id);
     }
     
 }

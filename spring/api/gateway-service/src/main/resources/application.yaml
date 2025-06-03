@@ -22,3 +22,7 @@ spring:
           uri: http://auth:8080
           predicates:
             - Path=/auth/**
+
+logging:
+  level:
+    espm: ${LOGGING_LEVEL_ESPM:debug}

@@ -3,6 +3,8 @@ package espm.account;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class AccountResource implements AccountController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AccountResource.class);
 
     @Autowired
     private AccountService accountService;
@@ -59,9 +63,10 @@ public class AccountResource implements AccountController {
 
     @Override
     public AccountOut login(AccountIn in) {
+        logger.debug("login: " + in.email() + ":" + in.password());
         return AccountParser.to(
             accountService.login(
-                in.name(),
+                in.email(),
                 in.password()
             )
         );

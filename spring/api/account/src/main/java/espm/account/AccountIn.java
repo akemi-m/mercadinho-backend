@@ -10,5 +10,4 @@ public record AccountIn(
     String email,
     String password
 ) {
-    
 }

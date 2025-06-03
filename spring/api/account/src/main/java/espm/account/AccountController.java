@@ -33,7 +33,7 @@ public interface AccountController {
     );
 
     @PostMapping("/account/login")
-    public AccountOut login(AccountIn in);
+    public AccountOut login(@RequestBody AccountIn in);
 
     @GetMapping("/price/{from}/{to}")
     public Map<String, String> price(
