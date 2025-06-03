@@ -10,13 +10,14 @@ import org.springframework.stereotype.Component;
 public class RouterValidator {
 
     private List<String> openApiEndpoints = List.of(
-        // authorization and authentication
-        "POST /auth/register",
-        "POST /auth/login"
-    );
+            // authorization and authentication
+            "POST /auth/register",
+            "POST /auth/login",
+            "GET /data/import/magnetic",
+            "GET /data/import/passage",
+            "GET /data/import/presence");
 
-    public Predicate<ServerHttpRequest> isSecured =
-        request -> openApiEndpoints
+    public Predicate<ServerHttpRequest> isSecured = request -> openApiEndpoints
             .stream()
             .noneMatch(uri -> {
                 String[] parts = uri.replaceAll("[^a-zA-Z0-9// *]", "").split(" ");
@@ -24,6 +25,7 @@ public class RouterValidator {
                 final String path = parts[1];
                 final boolean deep = path.endsWith("/**");
                 return ("ANY".equalsIgnoreCase(method) || request.getMethod().toString().equalsIgnoreCase(method))
-                    && (request.getURI().getPath().equals(path) || (deep && request.getURI().getPath().startsWith(path.replace("/**", ""))));
+                        && (request.getURI().getPath().equals(path)
+                                || (deep && request.getURI().getPath().startsWith(path.replace("/**", ""))));
             });
 }

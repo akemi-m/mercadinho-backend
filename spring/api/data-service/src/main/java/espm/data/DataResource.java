@@ -17,8 +17,8 @@ public class DataResource implements DataController {
     private DataService dataService;
 
     @Override
-    public void acquire(String idSensor) {
-        dataService.acquire(idSensor);
+    public void acquire(String nomeSensor) {
+        dataService.acquire(nomeSensor);
     }
 
     @Override

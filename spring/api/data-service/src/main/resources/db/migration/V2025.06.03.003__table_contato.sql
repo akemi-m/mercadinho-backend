@@ -1,0 +1,7 @@
+CREATE TABLE SensorContato (
+  Id_RegC INT NOT NULL,
+  Dt_SenC TIMESTAMP NOT NULL,
+  Tm_SenC INT NOT NULL,
+  Ab_SenC INT NOT NULL,
+  Id_SenC INT NOT NULL,
+  CONSTRAINT contato_pk PRIMARY KEY (Id_RegC));

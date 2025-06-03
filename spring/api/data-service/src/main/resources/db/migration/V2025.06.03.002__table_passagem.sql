@@ -1,0 +1,7 @@
+CREATE TABLE SensorPassagem (
+  Id_RegF INT NOT NULL,
+  Dt_SenF TIMESTAMP NOT NULL,
+  En_SenF INT NOT NULL,
+  Sd_SenF INT NOT NULL,
+  Id_SenF INT NOT NULL,
+  CONSTRAINT passagem_pk PRIMARY KEY (Id_RegF));

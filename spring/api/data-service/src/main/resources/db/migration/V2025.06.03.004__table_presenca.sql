@@ -1,0 +1,7 @@
+CREATE TABLE SensorPresenca (
+  Id_RegP INT NOT NULL,
+  Dt_SenP TIMESTAMP NOT NULL,
+  Tm_SenP INT NOT NULL,
+  Oc_Sens INT NOT NULL,
+  Id_SenP INT NOT NULL,
+  CONSTRAINT presenca_pk PRIMARY KEY (Id_RegP));
