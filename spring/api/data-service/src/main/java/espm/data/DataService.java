@@ -92,24 +92,24 @@ public class DataService {
 
         if (sensor.equals("magnetic")) {
             for (Map<String, ?> a : data) {
-                DataContatoRepository.save(DataContatoModel.builder()
-                        .idRegistro(Integer.parseInt(a.get("idRegistro").toString()))
-                        .dataSensor(LocalDateTime(a.get("dataSensor").toString()))
-                        .tempo(a.get("tempo"))
-                        .aberto(a.get("aberto"))
-                        .idSensor(a.get("idSensor"))
-                        .build());
+                contatoRepository.save(DataContatoModel.builder()
+                        .idRegistro((Integer) a.get("id")))
+                        .dataSensor((Date) a.get("data"))
+                        .tempo((Integer) a.get("delta"))
+                        .aberto((Integer) a.get("fechado"))
+                        .idSensor((Integer) a.get("id_sensor"))
+                        .build();
             }
         }
 
         if (sensor.equals("presense")) {
             for (Map<String, ?> a : data) {
-                DataPresencaRepository.save(DataPresencaModel.builder()
-                        .idRegistro(a.get("idRegistro"))
-                        .dataSensor(a.get("dataSensor"))
-                        .tempo(a.get("tempo"))
-                        .ocupado(a.get("aberto"))
-                        .idSensor(a.get("idSensor"))
+                presencaRepository.save(DataPresencaModel.builder()
+                        .idRegistro((Integer) a.get("id"))
+                        .dataSensor((Date) a.get("data"))
+                        .tempo((Integer) a.get("delta"))
+                        .ocupado((Integer) a.get("ocupado"))
+                        .idSensor((Integer) a.get("id_sensor"))
                         .build());
             }
 
@@ -118,12 +118,12 @@ public class DataService {
         if (sensor.equals("passage")) {
 
             for (Map<String, ?> a : data) {
-                DataPassagemRepository.save(DataPassagemModel.builder()
-                        .idRegistro((Integer) a.get("idRegistro"))
-                        .dataSensor((Date) a.get("dataSensor"))
-                        .entrada((Integer) a.get("tempo"))
-                        .saida((Integer) a.get("ocupado"))
-                        .idSensor((Integer) a.get("idSensor"))
+                passagemRepository.save(DataPassagemModel.builder()
+                        .idRegistro((Integer) a.get("id"))
+                        .dataSensor((Date) a.get("data"))
+                        .entrada((Integer) a.get("entrada"))
+                        .saida((Integer) a.get("sainda"))
+                        .idSensor((Integer) a.get("id_sensor"))
                         .build());
             }
 
