@@ -93,12 +93,12 @@ public class DataService {
         if (sensor.equals("magnetic")) {
             for (Map<String, ?> a : data) {
                 contatoRepository.save(DataContatoModel.builder()
-                        .idRegistro((Integer) a.get("id")))
+                        .idRegistro((Integer) a.get("id"))
                         .dataSensor((Date) a.get("data"))
                         .tempo((Integer) a.get("delta"))
                         .aberto((Integer) a.get("fechado"))
                         .idSensor((Integer) a.get("id_sensor"))
-                        .build();
+                        .build());
             }
         }
 
