@@ -1,14 +1,12 @@
 package espm.data;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@EnableJpaRepositories
-public interface DataPassagemRepository extends JpaRepository<DataPassagem, String> {
+public interface DataPassagemRepository extends CrudRepository<DataPassagemModel, Integer> {
 
-  @Query("SELECT MAX(Id_RegF) FROM data.sensorpassagem")
-  public DataPassagemModel maiorIdPassagem();
+  @Query("SELECT MAX(c.idRegistro) FROM DataPassagemModel c")
+  public Integer maiorIdPassagem();
 }

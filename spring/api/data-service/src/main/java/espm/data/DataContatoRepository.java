@@ -1,15 +1,13 @@
 package espm.data;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@EnableJpaRepositories
-public interface DataContatoRepository extends JpaRepository<DataContato, String> {
+public interface DataContatoRepository extends CrudRepository<DataContatoModel, Integer> {
 
-  @Query("SELECT MAX(Id_RegC) FROM data.sensorcontato")
-  public DataContatoModel maiorIdContato();
+  @Query("SELECT MAX(c.idRegistro) FROM DataContatoModel c")
+  public Integer maiorIdContato();
 
 }

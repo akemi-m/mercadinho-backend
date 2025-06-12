@@ -1,8 +1,10 @@
 package espm.data;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.bouncycastle.util.test.FixedSecureRandom.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import java.time.LocalDateTime;
 
 @Service
 public class DataService {
@@ -29,30 +32,31 @@ public class DataService {
 
     private final String URL = "https://iagen.espm.br/sensores/dados?sensor=%s&id_inferior=%d";
 
-    public void acquire(String sensor) {
+    public List<Map<String, ?>> acquire(String sensor) {
         int maiorId = 0;
 
         if (sensor.equals("magnetic")) {
-            DataContatoModel found = contatoRepository.maiorIdContato();
+            Integer found = contatoRepository.maiorIdContato();
 
             if (found != null) {
-                maiorId = found.idRegistro();
+                maiorId = found;
             }
         }
 
         if (sensor.equals("presense")) {
-            DataPresencaModel found = presencaRepository.maiorIdPresenca();
+            Integer found = presencaRepository.maiorIdPresenca();
+            logger.debug(found.toString());
 
             if (found != null) {
-                maiorId = found.idRegistro();
+                maiorId = found;
             }
         }
 
         if (sensor.equals("passage")) {
-            DataPassagemModel found = passagemRepository.maiorIdPassagem();
+            Integer found = passagemRepository.maiorIdPassagem();
 
             if (found != null) {
-                maiorId = found.idRegistro();
+                maiorId = found;
             }
         }
 
@@ -86,7 +90,52 @@ public class DataService {
 
         logger.debug(data.toString());
 
+        if (sensor.equals("magnetic")) {
+            for (Map<String, ?> a : data) {
+                DataContatoRepository.save(DataContatoModel.builder()
+                        .idRegistro(Integer.parseInt(a.get("idRegistro").toString()))
+                        .dataSensor(LocalDateTime(a.get("dataSensor").toString()))
+                        .tempo(a.get("tempo"))
+                        .aberto(a.get("aberto"))
+                        .idSensor(a.get("idSensor"))
+                        .build());
+            }
+        }
+
+        if (sensor.equals("presense")) {
+            for (Map<String, ?> a : data) {
+                DataPresencaRepository.save(DataPresencaModel.builder()
+                        .idRegistro(a.get("idRegistro"))
+                        .dataSensor(a.get("dataSensor"))
+                        .tempo(a.get("tempo"))
+                        .ocupado(a.get("aberto"))
+                        .idSensor(a.get("idSensor"))
+                        .build());
+            }
+
+        }
+
+        if (sensor.equals("passage")) {
+
+            for (Map<String, ?> a : data) {
+                DataPassagemRepository.save(DataPassagemModel.builder()
+                        .idRegistro((Integer) a.get("idRegistro"))
+                        .dataSensor((Date) a.get("dataSensor"))
+                        .entrada((Integer) a.get("tempo"))
+                        .saida((Integer) a.get("ocupado"))
+                        .idSensor((Integer) a.get("idSensor"))
+                        .build());
+            }
+
+        }
+
+        return data;
+
         // TODO: Adicionar no DB
+    }
+
+    public List<Map<String, ?>> post(String sensor) {
+
     }
 
 }
