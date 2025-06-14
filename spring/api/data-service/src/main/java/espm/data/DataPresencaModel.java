@@ -1,6 +1,6 @@
 package espm.data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,40 +23,40 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class DataPresencaModel {
 
-  @Id
-  @Column(name = "Id_RegP")
-  private Integer idRegistro;
+	@Id
+	@Column(name = "Id_RegP")
+	private Integer idRegistro;
 
-  @Column(name = "Dt_SenP")
-  private Date dataSensor;
+	@Column(name = "Dt_SenP")
+	private LocalDateTime dataSensor;
 
-  @Column(name = "Tm_SenP")
-  private Integer tempo;
+	@Column(name = "Tm_SenP")
+	private Integer tempo;
 
-  @Column(name = "Oc_Sens")
-  private Integer ocupado;
+	@Column(name = "Oc_Sens")
+	private Integer ocupado;
 
-  @Column(name = "Id_SenP")
-  private Integer idSensor;
+	@Column(name = "Id_SenP")
+	private Integer idSensor;
 
-  // ORM: Objeto -> Relacional
-  public DataPresencaModel(DataPresenca a) {
-    this.idRegistro = a.idRegistro();
-    this.dataSensor = a.dataSensor();
-    this.tempo = a.tempo();
-    this.ocupado = a.ocupado();
-    this.idSensor = a.idSensor();
-  }
+	// ORM: Objeto -> Relacional
+	public DataPresencaModel(DataPresenca a) {
+		this.idRegistro = a.idRegistro();
+		this.dataSensor = a.dataSensor();
+		this.tempo = a.tempo();
+		this.ocupado = a.ocupado();
+		this.idSensor = a.idSensor();
+	}
 
-  // ORM: Relacional -> Objeto
-  public DataPresenca to() {
-    return DataPresenca.builder()
-        .idRegistro(this.idRegistro)
-        .dataSensor(this.dataSensor)
-        .tempo(this.tempo)
-        .ocupado(this.ocupado)
-        .idSensor(this.idSensor)
-        .build();
-  }
+	// ORM: Relacional -> Objeto
+	public DataPresenca to() {
+		return DataPresenca.builder()
+				.idRegistro(this.idRegistro)
+				.dataSensor(this.dataSensor)
+				.tempo(this.tempo)
+				.ocupado(this.ocupado)
+				.idSensor(this.idSensor)
+				.build();
+	}
 
 }

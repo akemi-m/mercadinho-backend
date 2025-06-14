@@ -52,7 +52,8 @@ public class AuthorizationFilter implements GlobalFilter {
             final String[] parts = this.getAuthHeader(request).split(" ");
             if (parts.length != 2 || !parts[0].equals(AUTHORIZATION_BEARER_TOKEN_HEADER)) {
                 logger.debug("Formato enviado: " + Arrays.toString(parts));
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authorization header format must be: 'Bearer {token}'");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Authorization header format must be: 'Bearer {token}'");
             }
             logger.debug("Resolver o token");
             // resolver o token
@@ -76,36 +77,35 @@ public class AuthorizationFilter implements GlobalFilter {
         logger.debug("solving jwt: " + jwt);
         Map<String, String> body = Map.of("jwt", jwt);
         return webClient
-            .defaultHeader(
-                HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-            )
-            .build()
-            .post()
-            .uri(AUTH_SERVICE_TOKEN_SOLVE)
-            .bodyValue(body)
-            .retrieve()
-            .toEntity(Map.class)
-            .flatMap(response -> {
-                if (response != null && response.hasBody() && response.getBody() != null) {
-                    final Map<String, String> out = response.getBody();
-                    logger.debug("id account" + out.get("idAccount"));
-                    ServerWebExchange modifiedExchange = this.updateRequest(exchange, out);
-                    return chain.filter(modifiedExchange);
-                } else {
-                    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
-                }
-            });
+                .defaultHeader(
+                        HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build()
+                .post()
+                .uri(AUTH_SERVICE_TOKEN_SOLVE)
+                .bodyValue(body)
+                .retrieve()
+                .toEntity(Map.class)
+                .flatMap(response -> {
+                    if (response != null && response.hasBody() && response.getBody() != null) {
+                        final Map<String, String> out = response.getBody();
+                        logger.debug("id account" + out.get("idAccount"));
+                        ServerWebExchange modifiedExchange = this.updateRequest(exchange, out);
+                        return chain.filter(modifiedExchange);
+                    } else {
+                        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
+                    }
+                });
     }
 
-        private ServerWebExchange updateRequest(ServerWebExchange exchange, Map<String, String> out) {
+    private ServerWebExchange updateRequest(ServerWebExchange exchange, Map<String, String> out) {
         logger.debug("original headers: " + exchange.getRequest().getHeaders().toString());
         ServerWebExchange modified = exchange.mutate()
-            .request(
-                exchange.getRequest()
-                    .mutate()
-                    .header("id-account", out.get("idAccount"))
-                    .build()
-            ).build();
+                .request(
+                        exchange.getRequest()
+                                .mutate()
+                                .header("id-account", out.get("idAccount"))
+                                .build())
+                .build();
         logger.debug("updated headers: " + modified.getRequest().getHeaders().toString());
         return modified;
     }

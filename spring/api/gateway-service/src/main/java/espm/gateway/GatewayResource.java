@@ -11,8 +11,7 @@ public class GatewayResource {
     @GetMapping("/health-check")
     public Map<String, String> health_check() {
         return Map.of(
-            "api", "store"
-        );
+                "api", "store");
     }
-    
+
 }

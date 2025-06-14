@@ -1,5 +1,7 @@
 package espm.data;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -7,7 +9,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DataContatoRepository extends CrudRepository<DataContatoModel, Integer> {
 
-  @Query("SELECT MAX(c.idRegistro) FROM DataContatoModel c")
-  public Integer maiorIdContato();
+	@Query("SELECT MAX(c.idRegistro) FROM DataContatoModel c")
+	public Integer maiorIdContato();
+
+	public List<DataContatoModel> findAll();
 
 }

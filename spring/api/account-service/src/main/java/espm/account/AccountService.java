@@ -47,21 +47,21 @@ public class AccountService {
             List<AccountModel> listByEmail = accountRepository.findByEmail(a.email());
             if (listByEmail.size() > 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "email has already been registered");
-            }    
+            }
         }
         // update
         found
-            .email(a.email())
-            .name(a.name())
-            .hashPassword(a.hashPassword());
+                .email(a.email())
+                .name(a.name())
+                .hashPassword(a.hashPassword());
 
         return accountRepository.save(new AccountModel(found)).to();
     }
 
     public List<Account> findAll() {
         return accountRepository.findAll().stream()
-            .map(AccountModel::to)
-            .toList();
+                .map(AccountModel::to)
+                .toList();
     }
 
     public void deleteById(String id) {
@@ -86,7 +86,7 @@ public class AccountService {
      * https://bytebytego.com/guides/how-to-store-passwords-in-the-database/
      */
     private String hash(String value) {
-    try {
+        try {
             MessageDigest digester = MessageDigest.getInstance("SHA-256");
             byte[] hash = digester.digest(value.getBytes(StandardCharsets.UTF_8));
             String encoded = Base64.getEncoder().encodeToString(hash);
@@ -110,5 +110,5 @@ public class AccountService {
         String hash = hash(password);
         a.hashPassword(hash);
     }
-    
+
 }

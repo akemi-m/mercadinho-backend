@@ -1,4 +1,4 @@
-## Exercício 2
+## Mercadinho Backend em Spring Boot
 
 Utlizando Spring Boot, crie uma aplicação que permita o registro de usuários e autenticação. A aplicação deve permitir o cadastro de usuários com os seguintes campos:
 
@@ -43,7 +43,7 @@ flowchart LR
     classDef red fill:#fcc
 ```
 
-### Diagrama de Seqüência
+### Diagrama de Sequência
 
 `GET` `/data/import`
 

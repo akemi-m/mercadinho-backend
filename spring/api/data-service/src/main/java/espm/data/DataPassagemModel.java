@@ -1,6 +1,6 @@
 package espm.data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,40 +23,40 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class DataPassagemModel {
 
-  @Id
-  @Column(name = "Id_RegF")
-  private Integer idRegistro;
+	@Id
+	@Column(name = "Id_RegF")
+	private Integer idRegistro;
 
-  @Column(name = "Dt_SenF")
-  private Date dataSensor;
+	@Column(name = "Dt_SenF")
+	private LocalDateTime dataSensor;
 
-  @Column(name = "En_SenF")
-  private Integer entrada;
+	@Column(name = "En_SenF")
+	private Integer entrada;
 
-  @Column(name = "Sd_SenF")
-  private Integer saida;
+	@Column(name = "Sd_SenF")
+	private Integer saida;
 
-  @Column(name = "Id_SenF")
-  private Integer idSensor;
+	@Column(name = "Id_SenF")
+	private Integer idSensor;
 
-  // ORM: Objeto -> Relacional
-  public DataPassagemModel(DataPassagem a) {
-    this.idRegistro = a.idRegistro();
-    this.dataSensor = a.dataSensor();
-    this.entrada = a.entrada();
-    this.saida = a.saida();
-    this.idSensor = a.idSensor();
-  }
+	// ORM: Objeto -> Relacional
+	public DataPassagemModel(DataPassagem a) {
+		this.idRegistro = a.idRegistro();
+		this.dataSensor = a.dataSensor();
+		this.entrada = a.entrada();
+		this.saida = a.saida();
+		this.idSensor = a.idSensor();
+	}
 
-  // ORM: Relacional -> Objeto
-  public DataPassagem to() {
-    return DataPassagem.builder()
-        .idRegistro(this.idRegistro)
-        .dataSensor(this.dataSensor)
-        .entrada(this.entrada)
-        .saida(this.saida)
-        .idSensor(this.idSensor)
-        .build();
-  }
+	// ORM: Relacional -> Objeto
+	public DataPassagem to() {
+		return DataPassagem.builder()
+				.idRegistro(this.idRegistro)
+				.dataSensor(this.dataSensor)
+				.entrada(this.entrada)
+				.saida(this.saida)
+				.idSensor(this.idSensor)
+				.build();
+	}
 
 }

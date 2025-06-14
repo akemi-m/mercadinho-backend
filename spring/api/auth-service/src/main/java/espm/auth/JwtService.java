@@ -26,17 +26,16 @@ public class JwtService {
 
     public String create(String id, Date notBefore, Date expiration) {
         SecretKey key = Keys.hmacShaKeyFor(
-            Decoders.BASE64.decode(secretKey)
-        );
+                Decoders.BASE64.decode(secretKey));
         String jwt = Jwts.builder()
-            .header()
-            .and()
-            .id(id)
-            .issuer(issuer)
-            .signWith(key)
-            .notBefore(notBefore)
-            .expiration(expiration)
-            .compact();
+                .header()
+                .and()
+                .id(id)
+                .issuer(issuer)
+                .signWith(key)
+                .notBefore(notBefore)
+                .expiration(expiration)
+                .compact();
         return jwt;
     }
 
@@ -58,5 +57,5 @@ public class JwtService {
         JwtParser parser = Jwts.parser().verifyWith(key).build();
         return parser.parseSignedClaims(token).getPayload();
     }
-    
+
 }

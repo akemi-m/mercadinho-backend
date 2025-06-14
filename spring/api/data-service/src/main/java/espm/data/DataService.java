@@ -1,10 +1,8 @@
 package espm.data;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.bouncycastle.util.test.FixedSecureRandom.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class DataService {
@@ -43,9 +42,8 @@ public class DataService {
             }
         }
 
-        if (sensor.equals("presense")) {
+        if (sensor.equals("presence")) {
             Integer found = presencaRepository.maiorIdPresenca();
-            logger.debug(found.toString());
 
             if (found != null) {
                 maiorId = found;
@@ -94,7 +92,8 @@ public class DataService {
             for (Map<String, ?> a : data) {
                 contatoRepository.save(DataContatoModel.builder()
                         .idRegistro((Integer) a.get("id"))
-                        .dataSensor((Date) a.get("data"))
+                        .dataSensor(LocalDateTime.parse(a.get("data").toString(),
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                         .tempo((Integer) a.get("delta"))
                         .aberto((Integer) a.get("fechado"))
                         .idSensor((Integer) a.get("id_sensor"))
@@ -102,11 +101,12 @@ public class DataService {
             }
         }
 
-        if (sensor.equals("presense")) {
+        if (sensor.equals("presence")) {
             for (Map<String, ?> a : data) {
                 presencaRepository.save(DataPresencaModel.builder()
                         .idRegistro((Integer) a.get("id"))
-                        .dataSensor((Date) a.get("data"))
+                        .dataSensor(LocalDateTime.parse(a.get("data").toString(),
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                         .tempo((Integer) a.get("delta"))
                         .ocupado((Integer) a.get("ocupado"))
                         .idSensor((Integer) a.get("id_sensor"))
@@ -120,9 +120,10 @@ public class DataService {
             for (Map<String, ?> a : data) {
                 passagemRepository.save(DataPassagemModel.builder()
                         .idRegistro((Integer) a.get("id"))
-                        .dataSensor((Date) a.get("data"))
+                        .dataSensor(LocalDateTime.parse(a.get("data").toString(),
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                         .entrada((Integer) a.get("entrada"))
-                        .saida((Integer) a.get("sainda"))
+                        .saida((Integer) a.get("saida"))
                         .idSensor((Integer) a.get("id_sensor"))
                         .build());
             }
@@ -131,11 +132,39 @@ public class DataService {
 
         return data;
 
-        // TODO: Adicionar no DB
     }
 
-    public List<Map<String, ?>> post(String sensor) {
+    public List<Map<String, String>> export(String sensor) {
 
+        if (sensor.equals("magnetic")) {
+            return contatoRepository.findAll().stream().map(item -> {
+                return Map.of("id_Registro", item.idRegistro().toString(),
+                        "Data", item.dataSensor().toString(),
+                        "Tempo", item.tempo().toString(),
+                        "Aberto", item.aberto().toString(),
+                        "Id_Sensor", item.idSensor().toString());
+            }).toList();
+        }
+
+        if (sensor.equals("presence")) {
+            return presencaRepository.findAll().stream().map(item -> {
+                return Map.of("id_Registro", item.idRegistro().toString(),
+                        "Data", item.dataSensor().toString(),
+                        "Tempo", item.tempo().toString(),
+                        "Ocupado", item.ocupado().toString(),
+                        "Id_Sensor", item.idSensor().toString());
+            }).toList();
+        }
+
+        if (sensor.equals("passage")) {
+            return passagemRepository.findAll().stream().map(item -> {
+                return Map.of("id_Registro", item.idRegistro().toString(),
+                        "Data", item.dataSensor().toString(),
+                        "Entrada", item.entrada().toString(),
+                        "Saída", item.saida().toString(),
+                        "Id_Sensor", item.idSensor().toString());
+            }).toList();
+        }
+        return null;
     }
-
 }

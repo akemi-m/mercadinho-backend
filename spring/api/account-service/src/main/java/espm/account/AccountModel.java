@@ -16,12 +16,15 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Entity // habilita o objeto para persistencia
-@Table(name="account") // nome da tabela para persistencia
-@Getter @Setter @Accessors(fluent = true)
+@Table(name = "account") // nome da tabela para persistencia
+@Getter
+@Setter
+@Accessors(fluent = true)
 @Builder
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountModel {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -51,12 +54,12 @@ public class AccountModel {
     // ORM: Relacional -> Objeto
     public Account to() {
         return Account.builder()
-            .id(this.id)
-            .name(this.name)
-            .email(this.email)
-            .hashPassword(this.hashPassword)
-            .createdAt(this.createdAt)
-            .build();
+                .id(this.id)
+                .name(this.name)
+                .email(this.email)
+                .hashPassword(this.hashPassword)
+                .createdAt(this.createdAt)
+                .build();
     }
 
 }

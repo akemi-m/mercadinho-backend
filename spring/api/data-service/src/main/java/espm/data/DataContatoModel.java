@@ -1,6 +1,6 @@
 package espm.data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,40 +23,40 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class DataContatoModel {
 
-  @Id
-  @Column(name = "Id_RegC")
-  private Integer idRegistro;
+	@Id
+	@Column(name = "Id_RegC")
+	private Integer idRegistro;
 
-  @Column(name = "Dt_SenC")
-  private Date dataSensor;
+	@Column(name = "Dt_SenC")
+	private LocalDateTime dataSensor;
 
-  @Column(name = "Tm_SenC")
-  private Integer tempo;
+	@Column(name = "Tm_SenC")
+	private Integer tempo;
 
-  @Column(name = "Ab_SenC")
-  private Integer aberto;
+	@Column(name = "Ab_SenC")
+	private Integer aberto;
 
-  @Column(name = "Id_SenC")
-  private Integer idSensor;
+	@Column(name = "Id_SenC")
+	private Integer idSensor;
 
-  // ORM: Objeto -> Relacional
-  public DataContatoModel(DataContato a) {
-    this.idRegistro = a.idRegistro();
-    this.dataSensor = a.dataSensor();
-    this.tempo = a.tempo();
-    this.aberto = a.aberto();
-    this.idSensor = a.idSensor();
-  }
+	// ORM: Objeto -> Relacional
+	public DataContatoModel(DataContato a) {
+		this.idRegistro = a.idRegistro();
+		this.dataSensor = a.dataSensor();
+		this.tempo = a.tempo();
+		this.aberto = a.aberto();
+		this.idSensor = a.idSensor();
+	}
 
-  // ORM: Relacional -> Objeto
-  public DataContato to() {
-    return DataContato.builder()
-        .idRegistro(this.idRegistro)
-        .dataSensor(this.dataSensor)
-        .tempo(this.tempo)
-        .aberto(this.aberto)
-        .idSensor(this.idSensor)
-        .build();
-  }
+	// ORM: Relacional -> Objeto
+	public DataContato to() {
+		return DataContato.builder()
+				.idRegistro(this.idRegistro)
+				.dataSensor(this.dataSensor)
+				.tempo(this.tempo)
+				.aberto(this.aberto)
+				.idSensor(this.idSensor)
+				.build();
+	}
 
 }

@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 public interface AccountRepository extends CrudRepository<AccountModel, String> {
 
     public List<AccountModel> findAll();
+
     public List<AccountModel> findByEmail(String email);
+
     public AccountModel findByEmailAndHashPassword(String email, String hash);
-    
+
 }

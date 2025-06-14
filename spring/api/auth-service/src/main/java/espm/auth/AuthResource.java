@@ -23,36 +23,31 @@ public class AuthResource {
 
     @PostMapping("/auth/login")
     public TokenOut login(
-        @RequestBody CredentialIn credential
-    ) {
+            @RequestBody CredentialIn credential) {
 
         String jwt = authService.login(
-            credential.email(),
-            credential.password()
-        );
+                credential.email(),
+                credential.password());
         return TokenOut.builder()
-            .jwt(jwt)
-            .build();
+                .jwt(jwt)
+                .build();
 
     }
 
     @PostMapping("/auth/register")
     public void register(
-        @RequestBody RegisterIn register
-    ) {
+            @RequestBody RegisterIn register) {
 
         authService.register(
-            register.name(),
-            register.email(),
-            register.password()
-        );
+                register.name(),
+                register.email(),
+                register.password());
 
     }
 
     @GetMapping("/auth/whoiam")
     public AccountOut whoiam(
-        @RequestHeader(value = "id-account", required = true)
-        String idAccount) {
+            @RequestHeader(value = "id-account", required = true) String idAccount) {
         return authService.whoiam(idAccount);
     }
 
@@ -63,5 +58,5 @@ public class AuthResource {
         logger.debug("jwt: " + jwt);
         return authService.solve(jwt);
     }
-    
+
 }

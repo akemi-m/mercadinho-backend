@@ -28,17 +28,15 @@ public interface AccountController {
 
     @PutMapping("/account/{id}")
     public AccountOut update(
-        @PathVariable String id,
-        @RequestBody AccountIn in
-    );
+            @PathVariable String id,
+            @RequestBody AccountIn in);
 
     @PostMapping("/account/login")
     public AccountOut login(@RequestBody AccountIn in);
 
     @GetMapping("/price/{from}/{to}")
     public Map<String, String> price(
-        @PathVariable String from,
-        @PathVariable String to
-    );
+            @PathVariable String from,
+            @PathVariable String to);
 
 }

@@ -24,27 +24,27 @@ public class PriceService {
         // Definindo o padrão de envio e recebimento,
         // definindo os headers da requisicao
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType( MediaType.APPLICATION_JSON );
-        headers.setAccept(List.of( MediaType.APPLICATION_JSON ));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
         // Definindo o request:
         // metodo: get
         // headers: tipos aceitaveis
         RequestEntity<Void> request = RequestEntity
-            .get(uri)
-            .accept(MediaType.APPLICATION_JSON)
-            .headers(headers)
-            .build();
+                .get(uri)
+                .accept(MediaType.APPLICATION_JSON)
+                .headers(headers)
+                .build();
 
         // Definindo a resposta, para o parser.
         // Aqui, estou esperando um
         // Map com chave string e valor sendo outro map (String, String)
-        ParameterizedTypeReference<Map<String, Map<String, String>>> responseType =
-            new ParameterizedTypeReference<>() {};
-            
+        ParameterizedTypeReference<Map<String, Map<String, String>>> responseType = new ParameterizedTypeReference<>() {
+        };
+
         // aqui, a requisicao esta sendo feita
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.exchange(request, responseType).getBody().get(from + to);
     }
-    
+
 }

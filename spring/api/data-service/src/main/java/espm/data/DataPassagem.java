@@ -1,6 +1,6 @@
 package espm.data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +11,10 @@ import lombok.experimental.Accessors;
 @Builder
 public class DataPassagem {
 
-  private Integer idRegistro;
-  private Date dataSensor;
-  private Integer entrada;
-  private Integer saida;
-  private Integer idSensor;
+	private Integer idRegistro;
+	private LocalDateTime dataSensor;
+	private Integer entrada;
+	private Integer saida;
+	private Integer idSensor;
 
 }
